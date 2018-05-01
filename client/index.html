@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html class="full" lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Smart Secure</title>
+  <link href="assets2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets2/css/login.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+        <div class="col-lg-12">
+          <h1 class="page-header"><b>Smart Secure</b> 
+          </h1>
+  </div>
+</div>
+  <div class="container">
+    <div class="col-md-6">
+      <div id="logbox">
+        <form id="signup">
+          <h1>create an account</h1>
+          <input name="user[name]" type="text" placeholder="What's your username?" pattern="^[\w]{3,16}$" autofocus="autofocus" required="required" class="input pass"/>
+          <input name="user[password]" type="password" placeholder="Choose a password" required="required" class="input pass"/>
+          <input name="user[password2]" type="password" placeholder="Confirm password" required="required" class="input pass"/>
+          <input name="user[email]" type="email" placeholder="Email address" required="required" class="input pass"/>
+          <input type="button" value="Inscription" class="inputButton" onclick="inscription()"/>
+        </form>
+        <input id="emailStock2" type="hidden" value="Email Stocke"></input>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div id="logbox">
+        <form id="sign">
+          <h1>account login</h1>
+          <input name="user[email]" type="email" placeholder="enter your email" required="required" class="input pass"/>
+          <input name="user[password]" type="password" placeholder="enter your password" required="required" class="input pass"/>
+          <input type="button" value="Connexion" class="inputButton" onclick="connexion()"/>
+          <div class="text-center"">
+            <a href="#" id="">forgot password</a>
+          </div>
+        </form>
+        <input id="emailStock" type="hidden" value="ID Stocke"></input>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets2/js/jquery.js"></script>
+  <script src="assets2/js/bootstrap.min.js"></script>
+  <script src="assets2/js/authentification.js"></script>
+</body>
+</html>

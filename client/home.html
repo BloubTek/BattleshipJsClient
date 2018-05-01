@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="full" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Smart Secure</title>
+    <link rel="stylesheet" type="text/css" href="assets2/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="assets2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets2/css/full.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">My PHP</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/accueil">My PHP</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <div id="create" style="text-align: center;">
+        <h4>Add Database</h4>
+        <input class="btn" type="button" id="login" value="Create" onclick="create_database()">
+    </div>
+    <table id="example" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Matricule</th>
+                <th>Edition</th>
+                <th>Suppression</th>
+                <th>More</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+    <script src="assets2/js/jquery.js"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script src="assets2/js/bootstrap.min.js"></script>
+    <script src="assets2/js/database.js"></script>
+    <script type="text/javascript">
+        function format (data) {
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+            '<tr>'+
+            '<td>Matricule:</td>'+
+            '<td>'+data.id_poste+'</td>'+
+            '</tr>'+
+            '<tr>'+
+            '<td>Nom:</td>'+
+            '<td>'+data.flatName+'</td>'+
+            '</tr>'+
+            '<tr>'+
+            '<td>Adresse:</td>'+
+            '<td>'+data.address+'</td>'+
+            '</tr>'+
+            '</table>';
+        }
+
+        $(document).ready(function() {
+            var table = $('#example').DataTable({
+                "ajax": {
+                    "url": "http://localhost:3000/Flats",
+                    "dataSrc": "",
+                    "type": "GET"
+                },
+                "columns": [
+                { 
+                    "data": "id_poste",
+                    "className": "database_click" 
+                },
+                {
+                    "targets": -1,
+                    "className":      'edit-control',
+                    "orderable":      false,
+                    "data":           null,
+                    "defaultContent": "<center>Edit flat</center>" 
+                },
+                { 
+                    "targets": -1,
+                    "className":      'suppr-control',
+                    "orderable":      false,
+                    "data":           null,
+                    "defaultContent": "<center>Delete flat</center>"
+                },
+                {
+                    "targets": -1,
+                    "className":      'details-control',
+                    "orderable":      false,
+                    "data":           null,
+                    "defaultContent": "<center>Infos rapide</center>"
+                }
+                ],
+                "order": [[0, 'asc']]
+            } );
+            $('#example tbody').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row( tr );
+
+                if ( row.child.isShown() ) {
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    row.child( format(row.data()) ).show();
+                    tr.addClass('shown');
+                }
+            } );
+            $('#example tbody').on('click', 'td.edit-control', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                var input = prompt("Enter the new name of data base");
+                if (input === null) {
+                    return;
+                }
+                else
+                {
+                    $.ajax({
+                        method: "PUT",
+                        url: 'http://my-phpmyadmin.cloudapp.net/api/database',
+                        headers: {
+                            "Authorization": getCookie('token')
+                        },
+                        data: {"old_name": data.name, "new_name": input},
+                        success: function(data){
+                            console.log(data);
+                            window.location.reload(true);
+                        },
+                        error:function(data){
+                            $("#alert").remove();
+                            $("#create").append('<div id="alert" class="alert alert-warning">Erreur lors de la création d\'une base de données.</div>')}
+                        });
+                }
+            } );
+            $('#example tbody').on('click', 'td.suppr-control', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                var r = confirm("Do you confirm?");
+                if (r == true) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: 'http://my-phpmyadmin.cloudapp.net/api/database',
+                        headers: {
+                            "Authorization": getCookie('token')
+                        },                
+                        data: {"name": data.name},
+                        success: function(data){
+                            console.log(data);
+                            window.location.reload(true);
+                        },
+                        error:function(data){
+                            console.log(data);
+                            $("#alert").remove();
+                            $("#create").append('<div id="alert" class="alert alert-warning">Erreur lors de la suppression.</div>')}
+                    });    
+                }
+            } );
+            $('#example tbody').on( 'click', 'td.database_click', function () {
+                var data = table.row( $(this)).data();
+                window.location.href='/table?database='+data.id_poste;
+            });
+        });
+    </script>
+    <script src="assets2/js/cookie.js"></script>
+</body>
+
+</html>

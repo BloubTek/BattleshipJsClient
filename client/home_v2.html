@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html class="full" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Smart Secure</title>
+    <link rel="stylesheet" type="text/css" href="assets2/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="assets2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets2/css/full.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Smart Secure</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/accueil">Smart Secure</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <div id="exTab1" class="container"> 
+        <ul  class="nav nav-pills">
+            <li class="active">
+                <a  href="#1a" data-toggle="tab">Immeubles</a>
+            </li>
+            <li>
+                <a href="#2a" data-toggle="tab">Postiers</a>
+            </li>
+        </ul>
+        <div class="tab-content clearfix">
+            <div class="tab-pane active" id="1a">
+                <div id="create" style="text-align: center;">
+                    <h4>Add Flat</h4>
+                    <input class="btn" type="button" id="login" value="Create" onclick="create_database()">
+                </div>
+                <table id="example" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Matricule</th>
+                            <th>Edition</th>
+                            <th>Suppression</th>
+                            <th>More</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="tab-pane" id="2a">
+                <div id="create" style="text-align: center;">
+                    <h4>Add Postman</h4>
+                    <input class="btn" type="button" id="login" value="Create" onclick="create_database()">
+                </div>
+                <table id="example2" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Matricule</th>
+                            <th>Edition</th>
+                            <th>Suppression</th>
+                            <th>More</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+  </div>
+    
+    <script src="assets2/js/jquery.js"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script src="assets2/js/bootstrap.min.js"></script>
+    <script src="assets2/js/postmans_list.js"></script>
+    <script src="assets2/js/flats_list.js"></script>
+</body>
+
+</html>
